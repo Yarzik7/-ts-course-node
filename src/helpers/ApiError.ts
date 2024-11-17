@@ -7,7 +7,6 @@ interface MessageInterface {
   code?: string;
   errors?: ValidationError[];
 }
-
 export class ApiError extends HttpError {
   protected error: MessageInterface;
   public removeLog: boolean;

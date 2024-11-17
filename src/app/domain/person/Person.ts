@@ -2,6 +2,8 @@ import { JsonController, Get, Post, Body, Param } from "routing-controllers";
 import { IPerson } from "./Person.types";
 import { ApiResponse } from "helpers/ApiResponse";
 import { ApiError } from "helpers/ApiError";
+import { validate } from "class-validator";
+import { CreatePerson } from "./CreatePerson.dto";
 
 const storageData: IPerson[] = [];
 
@@ -27,8 +29,21 @@ export default class Person {
   }
 
   @Post()
-  async setPerson(@Body() body: IPerson) {
-    storageData.push(body);
+  async setPerson(@Body() body: CreatePerson) {
+    const errors = await validate(body);
+
+    if (errors.length > 0) {
+      throw new ApiError(400, {
+        message: "Validation failed",
+        code: "PERSON_VALIDATION_ERROR",
+        errors,
+      });
+    }
+
+    const id = storageData.length;
+
+    storageData.push({ ...body, id });
+
     return new ApiResponse(true, "Person successfully created");
   }
 }
