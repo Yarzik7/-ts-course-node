@@ -9,7 +9,7 @@ import { controllers } from "app/domain";
 export class Tcp implements IService {
   private static instance: Tcp;
 
-  private routePrefix = "api";
+  private routePrefix = "/api";
 
   public server = express();
 

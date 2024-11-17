@@ -5,7 +5,6 @@ import {
   Body,
   Param,
   UseAfter,
-  UseBefore,
 } from "routing-controllers";
 import { IPerson } from "./Person.types";
 import { ApiResponse } from "helpers/ApiResponse";
@@ -13,12 +12,10 @@ import { ApiError } from "helpers/ApiError";
 import { validate } from "class-validator";
 import { CreatePerson } from "./CreatePerson.dto";
 import { HTTPResponseLogger } from "app/middlewares/HTTPResponseLogger";
-import { HTTPRequestLogger } from "app/middlewares/HTTPRequestLogger";
 
 const storageData: IPerson[] = [];
 
 @JsonController("/person")
-@UseBefore(HTTPRequestLogger)
 export default class Person {
   @Get()
   @UseAfter(HTTPResponseLogger)
