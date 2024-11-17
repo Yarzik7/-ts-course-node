@@ -6,7 +6,6 @@ import { Middleware } from "routing-controllers";
 export class HTTPRequestLogger implements ExpressMiddlewareInterface {
   use(request: Request, _response: Response, next: NextFunction) {
     const { originalUrl, method, body } = request;
-
     console.log(
       `Received request: method=${method} path=${originalUrl}`,
       JSON.stringify(body)
